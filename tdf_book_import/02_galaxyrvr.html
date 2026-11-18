@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Galaxy RVR Mars Rover</title></head>
+<body>
+<div style="overflow:hidden;margin-bottom:1rem"><img src="images/galaxy_rvr_rover.png" alt="Galaxy RVR Mars Rover" style="max-width:220px;max-height:180px;width:auto;height:auto;float:right;margin:0 0 1rem 1.5rem"><table style="font-size:.9rem;border-collapse:collapse"><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Maker</th><td style="padding:.2rem 0">SunFounder</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Type</th><td style="padding:.2rem 0">Mobile rover (6 wheels)</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Location</th><td style="padding:.2rem 0">FLOOR</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Controller</th><td style="padding:.2rem 0">Arduino Uno R3 + ESP32-CAM (verify)</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">IP address</th><td style="padding:.2rem 0">192.168.10.52</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">SDK</th><td style="padding:.2rem 0">SunFounder Controller app / WebSocket (port 8765, verify)</td></tr></table><p style="margin-top:.75rem"><em>Availability: see the <strong>Robot availability</strong> database in this course.</em></p></div>
+<p>The Galaxy RVR is a six-wheel Mars-rover-style robot from SunFounder, kept in the FLOOR area of the Digital Factory Lab. This guide covers power-up, Wi-Fi connection, app and script tests, and shutdown.</p>
+<div class="alert alert-info" style="padding:.75rem 1rem;border-radius:6px;margin:1rem 0;border-left:4px solid #1d5aa6;background:#eef4fb"><p style="margin:0 0 .25rem;font-weight:bold">Note</p>
+<p>Lab-specific values (IP, frames, credentials) below are defaults. Check them against the robot before use.</p>
+</div>
+
+<h2>1. Robot Data &amp; Network Addressing</h2>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+<thead>
+<tr>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Parameter</th>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Controller</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Arduino Uno R3-compatible board + ESP32-CAM (verify)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Software</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">SunFounder Galaxy RVR Arduino firmware</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Drive</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">6 wheels (rocker-bogie)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Payload / speed</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Not specified – do not load the rover</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Robot IP</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">192.168.10.52</code> (lab Wi-Fi) – AP mode usually <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">192.168.4.1</code></td>
+</tr>
+</tbody>
+</table></div>
+
+<h2>2. Safety Checks</h2>
+<div class="alert alert-warning" style="padding:.75rem 1rem;border-radius:6px;margin:1rem 0;border-left:4px solid #c0322b;background:#fdf0ef"><p style="margin:0 0 .25rem;font-weight:bold">Warning</p>
+<p>The rover can drive off immediately when it receives commands. Always start it on the floor, never on a desk.</p>
+</div>
+<ul>
+<li>Battery charged and connected.</li>
+<li>Wheels free of cables and debris.</li>
+<li>Camera module and ESP32-CAM ribbon cable seated.</li>
+<li>Clear driving area of at least 2 × 2 m.</li>
+</ul>
+
+<h2>3. Power-Up Procedure</h2>
+<h3>3.1 Start the Controller</h3>
+<ol>
+<li>Place the rover on the floor.</li>
+<li>Switch on the power switch.</li>
+<li>Wait for the ESP32-CAM to start (status LED) and the Wi-Fi network/connection to appear.</li>
+</ol>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected result: The rover's Wi-Fi access point is visible, or the rover has joined the lab Wi-Fi.</em></p>
+
+<h2>4. Network Configuration</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>sudo ip addr add 192.168.10.200/24 dev eth0
+ping -c 3 192.168.10.52
+</code></pre>
+<p>If the rover runs in AP mode, connect the PC/tablet to the rover's Wi-Fi instead and use <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">192.168.4.1</code>.</p>
+
+<h2>5. Software Installation (Remote PC)</h2>
+<ul>
+<li>Install the <strong>SunFounder Controller</strong> app (iOS/Android) for manual driving.</li>
+<li>For scripted tests:</li>
+</ul>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>pip install websockets
+</code></pre>
+<p>To change the firmware, use the Arduino IDE with the SunFounder Galaxy RVR library.</p>
+
+<h2>6. Verification &amp; Health Checks</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>nc -zv 192.168.10.52 8765
+</code></pre>
+<p><em>Expected output: Connection succeeded.</em> (Port 8765 is the usual SunFounder Controller WebSocket port – verify.)</p>
+
+<h2>7. Test Script</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">python</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code># minimal connection test – opens the WebSocket used by the SunFounder Controller
+import asyncio, websockets
+
+ROBOT_IP = "192.168.10.52"
+PORT = 8765  # verify
+
+async def main():
+    async with websockets.connect(f"ws://{ROBOT_IP}:{PORT}", open_timeout=5) as ws:
+        msg = await asyncio.wait_for(ws.recv(), timeout=5)
+        print("Connected, first message:", msg[:200])
+
+asyncio.run(main())
+</code></pre>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected behavior: Prints <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">Connected</code> and a status message from the rover. Test driving with the SunFounder Controller app.</em></p>
+
+<h2>8. Shutdown</h2>
+<ol>
+<li>Stop the rover in the app and close the app.</li>
+<li>Switch the power off.</li>
+<li>Charge the battery if needed (USB-C / charging port).</li>
+<li>Release the robot on the Availability tab.</li>
+</ol>
+
+<h2>9. Troubleshooting</h2>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+<thead>
+<tr>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Symptom</th>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Wheels do not turn</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Check battery charge and motor cables.</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">No camera image</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Reseat the ESP32-CAM ribbon cable; restart.</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">App cannot connect</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Make sure the device is on the rover's Wi-Fi / same network.</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Upload in Arduino IDE fails</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Switch the upload/run switch to upload mode (if present) and retry.</td>
+</tr>
+</tbody>
+</table></div>
+</body></html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>ABB CRB 15000-5/0.95 (GoFa)</title></head>
+<body>
+<div style="overflow:hidden;margin-bottom:1rem"><img src="images/abb_gofa.png" alt="ABB CRB 15000-5/0.95 (GoFa)" style="max-width:220px;max-height:180px;width:auto;height:auto;float:right;margin:0 0 1rem 1.5rem"><p style="margin-top:.75rem"><em>Availability: see the <strong>Robot availability</strong> database in this course.</em></p></div>
+<p>6-axis collaborative robot with a torque sensor in every joint.</p>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>ID</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">gofa</code></td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Maker</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">ABB</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Type</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Collaborative robotic arm (6-axis)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Location</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">CELL</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Payload</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">5 kg</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Reach</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">950 mm</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Repeatability</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">±0.05 mm (verify on datasheet)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Max. TCP speed</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">2.2 m/s</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Joint sensors</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Torque sensor in each of the 6 joints</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Safety</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Category 3, PL d</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Controller</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">OmniCore C30</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>IP address</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">192.168.10.65</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Software</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">RobotWare 7</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>SDK</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">RAPID; Robot Web Services (REST) / EGM</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Software &amp; SDK</h2>
+<ul>
+<li><strong>FlexPendant apps:</strong> graphical programming and Wizard Easy Programming.</li>
+<li><strong>Lead-through:</strong> move the arm by hand to teach positions.</li>
+<li><strong>RobotStudio:</strong> offline programming and simulation, also for connecting to the real controller.</li>
+<li><strong>RAPID:</strong> ABB's robot language.</li>
+<li><strong>Robot Web Services (RWS):</strong> REST API over HTTPS for reading data and controlling programs from outside.</li>
+<li><strong>EGM (Externally Guided Motion):</strong> high-rate external motion control (option).</li>
+<li>Safety settings are configured with <strong>SafeMove</strong> on the FlexPendant.</li>
+</ul>
+<h2>Getting started</h2>
+<ol>
+<li>Power on the OmniCore controller and wait for the FlexPendant.</li>
+<li>Check the tool data (tooldata) and payload (loaddata).</li>
+<li>Teach with lead-through or Wizard; run in manual reduced speed first.</li>
+<li>Connect RobotStudio over the management/service port for offline work.</li>
+</ol>
+<h2>Safety</h2>
+<ul>
+<li>Collaborative only within a risk assessment for the actual task and tool.</li>
+<li>Do not change the SafeMove configuration without the lab responsible.</li>
+</ul>
+<h2>Open points</h2>
+<ul>
+<li>☐ RobotWare version and installed options (RWS, EGM)</li>
+</ul>
+<h2>Links</h2>
+<ul>
+<li>ABB product page: <a href="https://new.abb.com/products/robotics/de/roboter/kollaborative-roboter/crb-15000" target="_blank">https://new.abb.com/products/robotics/de/roboter/kollaborative-roboter/crb-15000</a></li>
+</ul>
+</body></html>

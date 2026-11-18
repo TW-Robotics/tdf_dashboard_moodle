@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>SO-ARM101</title></head>
+<body>
+<div style="overflow:hidden;margin-bottom:1rem"><img src="images/so_arm.png" alt="SO-ARM101" style="max-width:220px;max-height:180px;width:auto;height:auto;float:right;margin:0 0 1rem 1.5rem"><table style="font-size:.9rem;border-collapse:collapse"><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Maker</th><td style="padding:.2rem 0">TheRobotStudio / Hugging Face (open source)</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Type</th><td style="padding:.2rem 0">Robotic arm (stationary)</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Location</th><td style="padding:.2rem 0">TABLE</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Controller</th><td style="padding:.2rem 0">Feetech STS3215 bus servos + USB servo adapter</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">IP address</th><td style="padding:.2rem 0">USB (host PC)</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">SDK</th><td style="padding:.2rem 0">Feetech serial bus protocol / LeRobot API</td></tr></table><p style="margin-top:.75rem"><em>Availability: see the <strong>Robot availability</strong> database in this course.</em></p></div>
+<p>The SO-ARM101 is an open-source 6-axis desktop arm (5 joints + gripper) built with Feetech STS3215 bus servos, mounted on the TABLE in the Digital Factory Lab. This guide covers power-up, USB connection with LeRobot, a servo read test and shutdown.</p>
+<div class="alert alert-info" style="padding:.75rem 1rem;border-radius:6px;margin:1rem 0;border-left:4px solid #1d5aa6;background:#eef4fb"><p style="margin:0 0 .25rem;font-weight:bold">Note</p>
+<p>Lab-specific values (IP, frames, credentials) below are defaults. Check them against the robot before use.</p>
+</div>
+
+<h2>1. Robot Data &amp; Network Addressing</h2>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+<thead>
+<tr>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Parameter</th>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Controller</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Feetech STS3215 serial bus servos + USB bus-servo adapter</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Software</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">LeRobot (Python)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Axes</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">6 (5 joints + gripper), servo IDs 1–6</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Payload / reach</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Small objects only – verify in the SO-ARM101 docs</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Robot IP</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">None – USB serial to host PC (e.g. <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">/dev/ttyACM0</code>)</td>
+</tr>
+</tbody>
+</table></div>
+
+<h2>2. Safety Checks</h2>
+<div class="alert alert-warning" style="padding:.75rem 1rem;border-radius:6px;margin:1rem 0;border-left:4px solid #c0322b;background:#fdf0ef"><p style="margin:0 0 .25rem;font-weight:bold">Warning</p>
+<p>The arm holds torque once enabled and can snap to a new position. Keep hands out of the workspace while torque is on.</p>
+</div>
+<ul>
+<li>Base clamped firmly to the table.</li>
+<li>Servo cables connected in a daisy chain, no loose plugs.</li>
+<li>Correct power supply for the servos (verify voltage on the adapter label).</li>
+<li>If a leader arm is used: only the follower moves – keep both arms clear.</li>
+</ul>
+
+<h2>3. Power-Up Procedure</h2>
+<h3>3.1 Start the Controller</h3>
+<ol>
+<li>Put the arm in its rest pose.</li>
+<li>Connect the servo power supply to the adapter board.</li>
+<li>Connect the adapter to the PC via USB.</li>
+</ol>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected result: A new serial port appears on the PC; the arm stays limp until torque is enabled.</em></p>
+
+<h2>4. Network Configuration</h2>
+<p>No network – USB only.</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>python -m lerobot.find_port   # unplug/replug when asked (command name may differ by LeRobot version)
+sudo chmod 666 /dev/ttyACM0    # Linux: give access to the port
+</code></pre>
+
+<h2>5. Software Installation (Remote PC)</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>pip install lerobot feetech-servo-sdk
+</code></pre>
+<p>Run the LeRobot calibration for SO-101 before the first motion task (see LeRobot SO-101 docs).</p>
+
+<h2>6. Verification &amp; Health Checks</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>python -m serial.tools.list_ports
+</code></pre>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected output: The USB servo adapter is listed.</em></p>
+
+<h2>7. Test Script</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">python</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code># minimal connection test – reads present position of all 6 servos (no motion)
+from scservo_sdk import PortHandler, PacketHandler
+
+PORT = "/dev/ttyACM0"   # verify
+PRESENT_POSITION = 56   # STS3215 register
+
+port = PortHandler(PORT)
+packet = PacketHandler(0)
+port.openPort(); port.setBaudRate(1000000)
+
+for sid in range(1, 7):
+    pos, res, err = packet.read2ByteTxRx(port, sid, PRESENT_POSITION)
+    print(f"Servo {sid}: position={pos} ok={res == 0}")
+port.closePort()
+</code></pre>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected behavior: Six lines with positions (0–4095). Move a joint by hand and run again – the value changes.</em></p>
+
+<h2>8. Shutdown</h2>
+<ol>
+<li>Move the arm to the rest pose and disable torque.</li>
+<li>Disconnect USB.</li>
+<li>Unplug the servo power supply.</li>
+<li>Release the robot on the Availability tab.</li>
+</ol>
+
+<h2>9. Troubleshooting</h2>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+<thead>
+<tr>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Symptom</th>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Port not found / permission denied</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Check USB cable; <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">sudo chmod 666 /dev/ttyACM0</code> or add user to <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">dialout</code>.</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">A servo does not answer</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Check daisy-chain cable and that servo IDs are unique (1–6).</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Arm moves to wrong positions</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Re-run LeRobot calibration.</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Servo hot or buzzing</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Disable torque, reduce load, check for mechanical blocking.</td>
+</tr>
+</tbody>
+</table></div>
+</body></html>

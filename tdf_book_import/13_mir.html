@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>MiR with UR5</title></head>
+<body>
+<div style="overflow:hidden;margin-bottom:1rem"><img src="images/mir_ur5.png" alt="MiR with UR5" style="max-width:220px;max-height:180px;width:auto;height:auto;float:right;margin:0 0 1rem 1.5rem"><p style="margin-top:.75rem"><em>Availability: see the <strong>Robot availability</strong> database in this course.</em></p></div>
+<p>Autonomous mobile robot (AMR) from Mobile Industrial Robots with a Universal Robots UR5 arm mounted on top.</p>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>ID</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">mir</code></td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Maker</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Mobile Industrial Robots (MiR)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Type</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Mobile manipulator (AMR + UR5 arm)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Location</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">FLOOR</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>MiR model</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">MODEL – check the type plate (e.g. MiR100 / MiR200 / MiR250)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Platform payload</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">PAYLOAD (depends on MiR model)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Arm</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">UR5 – 6 axes, 5 kg, 850 mm reach, ±0.1 mm repeatability (see <a href="18_ur5.html">UR5</a>)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Controller</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">MiR onboard PC + UR controller (verify)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>IP address</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">192.168.10.59</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Software</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">MiR Robot software (web interface) + PolyScope on the UR</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>SDK</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">MiR REST API (HTTP, port 80) + URScript / RTDE (port 30004)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Software &amp; SDK</h2>
+<ul>
+<li><strong>MiR:</strong> web interface in a browser at the robot's IP. Missions, maps and positions are set up there. The REST API (<code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">http://&lt;ip&gt;/api/v2.0.0/</code>) allows starting missions from external code; it needs an authorization header generated in the web interface (verify for this software version).</li>
+<li><strong>UR5:</strong> programmed with PolyScope on the teach pendant; external control via URScript, RTDE, Dashboard server (port 29999) or Modbus TCP.</li>
+<li>Fleet use: MiR Fleet for central management of several robots.</li>
+</ul>
+<h2>Getting started</h2>
+<ol>
+<li>Charge the MiR (charging station or cable) and power on both MiR and UR controller.</li>
+<li>Open the MiR web interface, check the map, localize the robot.</li>
+<li>Run a short test mission without the arm moving.</li>
+<li>Only move the arm while the platform is stopped, unless a tested combined program exists.</li>
+</ol>
+<h2>Safety</h2>
+<ul>
+<li>The MiR has laser scanners and protective fields; never disable or mute them.</li>
+<li>The UR5 is collaborative only after a risk assessment of the full mobile manipulator. Treat the combination as non-collaborative until that is done.</li>
+<li>Secure the arm in a transport pose before driving.</li>
+</ul>
+<h2>Open points</h2>
+<ul>
+<li>☐ Exact MiR model, software version and payload</li>
+<li>☐ UR controller generation (CB3 / e-Series)</li>
+<li>☐ Mounting / top module and its documentation</li>
+</ul>
+<h2>Links</h2>
+<ul>
+<li>MiR robots: <a href="https://mobile-industrial-robots.com/de/produkte/roboter" target="_blank">https://mobile-industrial-robots.com/de/produkte/roboter</a></li>
+<li>UR5 datasheet: <a href="https://www.universal-robots.com/media/50582/ur5_de.pdf" target="_blank">https://www.universal-robots.com/media/50582/ur5_de.pdf</a></li>
+</ul>
+</body></html>

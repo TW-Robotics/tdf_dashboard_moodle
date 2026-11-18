@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Mini Wheeled-Legged Robot</title></head>
+<body>
+<div style="overflow:hidden;margin-bottom:1rem"><img src="images/stackforce_wheeled.png" alt="Mini Wheeled-Legged Robot" style="max-width:220px;max-height:180px;width:auto;height:auto;float:right;margin:0 0 1rem 1.5rem"><table style="font-size:.9rem;border-collapse:collapse"><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Maker</th><td style="padding:.2rem 0">StackForce</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Type</th><td style="padding:.2rem 0">Hybrid mobile robot (wheel-leg)</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Location</th><td style="padding:.2rem 0">FLOOR</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Controller</th><td style="padding:.2rem 0">ESP32 (verify)</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">IP address</th><td style="padding:.2rem 0">192.168.10.57</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">SDK</th><td style="padding:.2rem 0">Vendor app / remote (verify)</td></tr></table><p style="margin-top:.75rem"><em>Availability: see the <strong>Robot availability</strong> database in this course.</em></p></div>
+<p>The StackForce Mini Wheeled-Legged Robot is a small self-balancing robot with wheels on adjustable legs, kept in the FLOOR area of the Digital Factory Lab. This guide covers power-up, balancing start, connection check and shutdown.</p>
+<div class="alert alert-info" style="padding:.75rem 1rem;border-radius:6px;margin:1rem 0;border-left:4px solid #1d5aa6;background:#eef4fb"><p style="margin:0 0 .25rem;font-weight:bold">Note</p>
+<p>Lab-specific values (IP, frames, credentials) below are defaults. Check them against the robot before use.</p>
+</div>
+
+<h2>1. Robot Data &amp; Network Addressing</h2>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+<thead>
+<tr>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Parameter</th>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Controller</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">ESP32 (verify)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Software</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">StackForce factory firmware</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Actuators</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">2 wheel motors + leg servos (verify count)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Payload / speed</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Not specified – do not load the robot</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Robot IP</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">192.168.10.57</code> (if Wi-Fi is used – verify)</td>
+</tr>
+</tbody>
+</table></div>
+
+<h2>2. Safety Checks</h2>
+<div class="alert alert-warning" style="padding:.75rem 1rem;border-radius:6px;margin:1rem 0;border-left:4px solid #c0322b;background:#fdf0ef"><p style="margin:0 0 .25rem;font-weight:bold">Warning</p>
+<p>The robot balances actively and can roll away quickly if it falls or loses balance. Hold it upright when switching on, and catch it before switching off.</p>
+</div>
+<ul>
+<li>Battery charged.</li>
+<li>Wheels and leg joints free.</li>
+<li>Flat, non-slippery floor with at least 1 m free space.</li>
+</ul>
+
+<h2>3. Power-Up Procedure</h2>
+<h3>3.1 Start the Controller</h3>
+<ol>
+<li>Hold the robot upright on the floor.</li>
+<li>Switch on the power.</li>
+<li>Wait until it balances on its own, then let go slowly.</li>
+</ol>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected result: The robot stands and balances without drifting.</em></p>
+
+<h2>4. Network Configuration</h2>
+<p>Connect with the vendor app/remote as described by StackForce. If Wi-Fi is configured:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>ping -c 3 192.168.10.57
+</code></pre>
+
+<h2>5. Software Installation (Remote PC)</h2>
+<p>Install the StackForce app or tools from the vendor documentation. For firmware changes: Arduino IDE / PlatformIO with ESP32 support (verify).</p>
+
+<h2>6. Verification &amp; Health Checks</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>nc -zv 192.168.10.57 80
+</code></pre>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected output: Connection succeeded (only if the firmware runs a web server – verify).</em></p>
+
+<h2>7. Test Script</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">python</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code># minimal reachability test (no motion)
+import subprocess
+ROBOT_IP = "192.168.10.57"
+ok = subprocess.call(["ping", "-c", "3", ROBOT_IP]) == 0
+print("Robot reachable" if ok else "Robot NOT reachable")
+</code></pre>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected behavior: Prints <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">Robot reachable</code>. Test motion with the vendor remote/app.</em></p>
+
+<h2>8. Shutdown</h2>
+<ol>
+<li>Stop all motion and hold the robot upright.</li>
+<li>Switch off the power while holding it.</li>
+<li>Lay it down and charge the battery if needed.</li>
+<li>Release the robot on the Availability tab.</li>
+</ol>
+
+<h2>9. Troubleshooting</h2>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+<thead>
+<tr>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Symptom</th>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Robot falls over at start</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Start on a flat surface; recalibrate the IMU (vendor docs).</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Oscillates/shakes</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Battery low – charge; check wheel and leg screws.</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">No connection</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Restart robot and app; check pairing/Wi-Fi settings.</td>
+</tr>
+</tbody>
+</table></div>
+</body></html>

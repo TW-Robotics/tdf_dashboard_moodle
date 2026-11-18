@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Double-Deck Robot Chassis</title></head>
+<body>
+<div style="overflow:hidden;margin-bottom:1rem"><img src="images/berrybase_chassis.png" alt="Double-Deck Robot Chassis" style="max-width:220px;max-height:180px;width:auto;height:auto;float:right;margin:0 0 1rem 1.5rem"><table style="font-size:.9rem;border-collapse:collapse"><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Maker</th><td style="padding:.2rem 0">BerryBase</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Type</th><td style="padding:.2rem 0">Robot chassis (2-level, wheeled)</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Location</th><td style="padding:.2rem 0">BENCH</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Controller</th><td style="padding:.2rem 0">None fitted (e.g. Raspberry Pi + motor driver)</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">IP address</th><td style="padding:.2rem 0">192.168.10.54</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">SDK</th><td style="padding:.2rem 0">GPIO / PWM (gpiozero) if Raspberry Pi fitted</td></tr></table><p style="margin-top:.75rem"><em>Availability: see the <strong>Robot availability</strong> database in this course.</em></p></div>
+<p>The BerryBase Double-Deck Robot Chassis is a two-level wheeled platform kept on the BENCH of the Digital Factory Lab, intended as a base for student builds. This guide assumes a Raspberry Pi and a motor driver are fitted; adapt pins and IP to the actual build.</p>
+<div class="alert alert-info" style="padding:.75rem 1rem;border-radius:6px;margin:1rem 0;border-left:4px solid #1d5aa6;background:#eef4fb"><p style="margin:0 0 .25rem;font-weight:bold">Note</p>
+<p>Lab-specific values (IP, frames, credentials) below are defaults. Check them against the robot before use.</p>
+</div>
+
+<h2>1. Robot Data &amp; Network Addressing</h2>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+<thead>
+<tr>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Parameter</th>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Controller</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">None by default – e.g. Raspberry Pi + L298N / TB6612 motor driver</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Software</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Raspberry Pi OS + Python (if fitted)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Drive</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">2 DC gear motors + caster (verify)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Payload / speed</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Not specified</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Robot IP</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">192.168.10.54</code> (Raspberry Pi, if fitted)</td>
+</tr>
+</tbody>
+</table></div>
+
+<h2>2. Safety Checks</h2>
+<div class="alert alert-warning" style="padding:.75rem 1rem;border-radius:6px;margin:1rem 0;border-left:4px solid #c0322b;background:#fdf0ef"><p style="margin:0 0 .25rem;font-weight:bold">Warning</p>
+<p>Test new wiring with the wheels lifted off the bench – a wrong pin can make the chassis drive off the table.</p>
+</div>
+<ul>
+<li>Check motor driver wiring and polarity before connecting the battery.</li>
+<li>Use separate supplies (or a proper regulator) for motors and Raspberry Pi.</li>
+<li>Lift the chassis onto a stand for first tests.</li>
+</ul>
+
+<h2>3. Power-Up Procedure</h2>
+<h3>3.1 Start the Controller</h3>
+<ol>
+<li>Put the chassis on a stand (wheels free).</li>
+<li>Connect the motor battery.</li>
+<li>Power the Raspberry Pi and wait about 1 minute for boot.</li>
+</ol>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected result: The Pi answers to ping/SSH; motors do not move.</em></p>
+
+<h2>4. Network Configuration</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>sudo ip addr add 192.168.10.200/24 dev eth0
+ping -c 3 192.168.10.54
+ssh pi@192.168.10.54
+</code></pre>
+
+<h2>5. Software Installation (Raspberry Pi)</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>sudo apt install -y python3-gpiozero
+</code></pre>
+
+<h2>6. Verification &amp; Health Checks</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>nc -zv 192.168.10.54 22
+</code></pre>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected output: Connection succeeded.</em></p>
+
+<h2>7. Test Script</h2>
+<p>Run on the Raspberry Pi:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">python</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code># minimal motion test – wheels lifted! adjust GPIO pins to your wiring
+from gpiozero import Robot
+from time import sleep
+
+bot = Robot(left=(17, 18), right=(22, 23))   # verify pins
+bot.forward(0.4); sleep(1)
+bot.backward(0.4); sleep(1)
+bot.stop()
+</code></pre>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected behavior: Both wheels turn forward for 1 s, backward for 1 s, then stop. If one wheel runs the wrong way, swap that motor's pins.</em></p>
+
+<h2>8. Shutdown</h2>
+<ol>
+<li>Stop the motors.</li>
+<li><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">sudo shutdown -h now</code> on the Pi, wait for the green LED to stop.</li>
+<li>Disconnect the motor battery.</li>
+<li>Release the robot on the Availability tab.</li>
+</ol>
+
+<h2>9. Troubleshooting</h2>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+<thead>
+<tr>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Symptom</th>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Pi reboots when motors start</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Motors draw too much current – use a separate motor supply.</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">One wheel does not turn</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Check driver wiring and enable pins; swap channels to test.</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Wheel turns the wrong way</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Swap the two motor wires or the two GPIO pins.</td>
+</tr>
+</tbody>
+</table></div>
+</body></html>

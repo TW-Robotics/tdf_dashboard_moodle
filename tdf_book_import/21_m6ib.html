@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>FANUC M-6iB</title></head>
+<body>
+<div style="overflow:hidden;margin-bottom:1rem"><img src="images/fanuc_m6ib.png" alt="FANUC M-6iB" style="max-width:220px;max-height:180px;width:auto;height:auto;float:right;margin:0 0 1rem 1.5rem"><p style="margin-top:.75rem"><em>Availability: see the <strong>Robot availability</strong> database in this course.</em></p></div>
+<p>6-axis industrial robot for handling and arc welding (older FANUC generation).</p>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>ID</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">m6ib</code></td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Maker</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">FANUC</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Type</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Industrial robotic arm (6-axis)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Location</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">CELL</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Payload</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">6 kg</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Reach</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">1373 mm</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Repeatability</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">±0.08 mm</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Weight</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">approx. 138 kg</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Controller</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">R-30iA (verify – could also be R-J3iC)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Teach pendant</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">iPendant / teach pendant</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>IP address</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">192.168.10.67</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Software</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">HandlingTool (verify)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>SDK</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">TP programs / KAREL; socket messaging and PC interface (options – check if licensed)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Getting started</h2>
+<ol>
+<li>Check the cell guarding and emergency stop.</li>
+<li>Power on the controller; check that no alarms are active (reset if needed).</li>
+<li>Jog and teach in <strong>T1</strong> (max. 250 mm/s) with the deadman switch.</li>
+<li>Run new programs in step mode first.</li>
+</ol>
+<h2>Safety</h2>
+<ul>
+<li>Industrial robot – <strong>not collaborative.</strong> Nobody inside the cell while it moves in AUTO.</li>
+<li>Older controller: check that the batteries for the encoder data are changed regularly (otherwise mastering is lost).</li>
+</ul>
+<h2>Open points</h2>
+<ul>
+<li>☐ Controller generation and software options</li>
+<li>☐ Encoder battery change date</li>
+</ul>
+<h2>Links</h2>
+<ul>
+<li>RoboDK model and specs: <a href="https://robodk.com/robot/de/Fanuc/M-6iB" target="_blank">https://robodk.com/robot/de/Fanuc/M-6iB</a></li>
+</ul>
+</body></html>

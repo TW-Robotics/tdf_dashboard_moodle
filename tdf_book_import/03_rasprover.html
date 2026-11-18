@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>RaspRover (tracked, with arm)</title></head>
+<body>
+<div style="overflow:hidden;margin-bottom:1rem"><img src="images/rasprover_tracked.png" alt="RaspRover (tracked, with arm)" style="max-width:220px;max-height:180px;width:auto;height:auto;float:right;margin:0 0 1rem 1.5rem"><table style="font-size:.9rem;border-collapse:collapse"><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Maker</th><td style="padding:.2rem 0">Waveshare</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Type</th><td style="padding:.2rem 0">Mobile manipulator (tracked)</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Location</th><td style="padding:.2rem 0">FLOOR</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Controller</th><td style="padding:.2rem 0">NVIDIA Jetson + ESP32 driver board</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">IP address</th><td style="padding:.2rem 0">192.168.10.53</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">SDK</th><td style="padding:.2rem 0">JSON commands via UART / HTTP; web UI port 5000, JupyterLab 8888 (verify)</td></tr></table><p style="margin-top:.75rem"><em>Availability: see the <strong>Robot availability</strong> database in this course.</em></p></div>
+<p>The RaspRover is a tracked Waveshare mobile robot with a robotic arm and an NVIDIA Jetson as host computer, kept in the FLOOR area of the Digital Factory Lab. This guide covers power-up, network access to the Jetson, the web UI and a minimal drive/stop test.</p>
+<div class="alert alert-info" style="padding:.75rem 1rem;border-radius:6px;margin:1rem 0;border-left:4px solid #1d5aa6;background:#eef4fb"><p style="margin:0 0 .25rem;font-weight:bold">Note</p>
+<p>Lab-specific values (IP, frames, credentials) below are defaults. Check them against the robot before use.</p>
+</div>
+
+<h2>1. Robot Data &amp; Network Addressing</h2>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+<thead>
+<tr>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Parameter</th>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Controller</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">NVIDIA Jetson (host) + ESP32 general driver board (motors, arm)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Software</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Ubuntu / JetPack + Waveshare UGV application</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Arm</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">4-axis arm (verify model and payload on the arm label)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Payload / speed</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Verify in the Waveshare spec sheet – do not exceed</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Robot IP</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">192.168.10.53</code> (Jetson)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Login</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">jetson</code> / lab password (verify)</td>
+</tr>
+</tbody>
+</table></div>
+
+<h2>2. Safety Checks</h2>
+<div class="alert alert-warning" style="padding:.75rem 1rem;border-radius:6px;margin:1rem 0;border-left:4px solid #c0322b;background:#fdf0ef"><p style="margin:0 0 .25rem;font-weight:bold">Warning</p>
+<p>Tracks and arm move as soon as commands arrive. Keep the arm folded while driving and keep hands clear of the gripper.</p>
+</div>
+<ul>
+<li>Battery pack charged (check voltage on the display, if fitted).</li>
+<li>Tracks tensioned, nothing caught in them.</li>
+<li>Arm in folded/home position before power-up.</li>
+<li>Clear driving area of at least 2 × 2 m.</li>
+</ul>
+
+<h2>3. Power-Up Procedure</h2>
+<h3>3.1 Start the Controller</h3>
+<ol>
+<li>Place the robot on the floor with the arm folded.</li>
+<li>Switch on the main power switch.</li>
+<li>Wait 1–2 minutes for the Jetson to boot; the OLED (if fitted) shows the IP address.</li>
+</ol>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected result: OLED shows the IP; the Jetson answers to ping and SSH.</em></p>
+
+<h2>4. Network Configuration</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>sudo ip addr add 192.168.10.200/24 dev eth0
+ping -c 3 192.168.10.53
+ssh jetson@192.168.10.53
+</code></pre>
+
+<h2>5. Software Installation (Remote PC)</h2>
+<p>Nothing is required for the web UI. For scripted tests over SSH:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>pip install paramiko
+</code></pre>
+<p>On the Jetson (normally pre-installed):</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>pip install pyserial
+</code></pre>
+
+<h2>6. Verification &amp; Health Checks</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>nc -zv 192.168.10.53 22     # SSH
+nc -zv 192.168.10.53 5000   # Waveshare web UI (verify)
+nc -zv 192.168.10.53 8888   # JupyterLab (verify)
+</code></pre>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected output: Connection succeeded.</em></p>
+
+<h2>7. Test Script</h2>
+<p>Run on the Jetson (stop the Waveshare app first so the serial port is free):</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">python</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code># minimal motion test – short slow forward motion, then stop
+import serial, json, time
+
+PORT = "/dev/ttyTHS0"   # verify: UART between Jetson and ESP32
+ser = serial.Serial(PORT, 115200, timeout=1)
+
+def send(cmd):
+    ser.write((json.dumps(cmd) + "\n").encode())
+
+send({"T": 1, "L": 0.1, "R": 0.1})   # both tracks slow forward
+time.sleep(1.0)
+send({"T": 1, "L": 0, "R": 0})       # stop
+print(ser.read_all().decode(errors="ignore"))
+</code></pre>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected behavior: The robot drives forward slowly for about 1 s and stops. If the JSON format differs, check the Waveshare JSON command list for your firmware.</em></p>
+
+<h2>8. Shutdown</h2>
+<ol>
+<li>Stop all motion and fold the arm.</li>
+<li>Shut down the Jetson cleanly: <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">sudo shutdown -h now</code>.</li>
+<li>Wait until the Jetson is off, then switch off the main power.</li>
+<li>Charge the battery if needed.</li>
+<li>Release the robot on the Availability tab.</li>
+</ol>
+
+<h2>9. Troubleshooting</h2>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+<thead>
+<tr>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Symptom</th>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">No IP on the OLED</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Wait longer; connect HDMI/keyboard and check Wi-Fi.</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Serial port busy</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Stop the Waveshare app/service before running your own script.</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Tracks do not move</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Check battery voltage and the ESP32 board power.</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Arm jerks or stalls</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Stop, fold the arm manually with power off, check cables.</td>
+</tr>
+</tbody>
+</table></div>
+</body></html>

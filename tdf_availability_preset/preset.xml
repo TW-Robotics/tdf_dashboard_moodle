@@ -1,0 +1,119 @@
+<preset>
+
+<description>Digital Factory Lab – robot availability (Free / Busy / Occupied). © Dr. Kannan Peesapati</description>
+
+<settings>
+<intro></intro>
+<comments>0</comments>
+<requiredentries>0</requiredentries>
+<requiredentriestoview>0</requiredentriestoview>
+<maxentries>0</maxentries>
+<rssarticles>0</rssarticles>
+<approval>0</approval>
+<manageapproved>1</manageapproved>
+<defaultsortdir>0</defaultsortdir>
+<defaultsort>listorder</defaultsort>
+</settings>
+
+<field>
+<type>number</type>
+<name>listorder</name>
+<description>Position in the list (1 = first)</description>
+<required>1</required>
+</field>
+
+<field>
+<type>text</type>
+<name>robot</name>
+<description>Robot name</description>
+<required>1</required>
+</field>
+
+<field>
+<type>text</type>
+<name>maker</name>
+<description>Manufacturer</description>
+<required>0</required>
+</field>
+
+<field>
+<type>text</type>
+<name>type</name>
+<description>Robot type</description>
+<required>0</required>
+</field>
+
+<field>
+<type>text</type>
+<name>cell</name>
+<description>Location in the lab (CELL, FLOOR, TABLE …)</description>
+<required>0</required>
+</field>
+
+<field>
+<type>text</type>
+<name>ip</name>
+<description>IP address or connection</description>
+<required>0</required>
+</field>
+
+<field>
+<type>menu</type>
+<name>status</name>
+<description>Free, Busy (in use by a person) or Occupied (maintenance, course, out of service)</description>
+<required>1</required>
+<param1>Free
+Busy
+Occupied</param1>
+</field>
+
+<field>
+<type>menu</type>
+<name>person</name>
+<description>Person responsible while Busy or Occupied</description>
+<required>0</required>
+<param1>FH-Prof. Dr.techn. Mohamed Aburaia, MSc
+Dr. Techn. Zlatan Ajanovic
+Nikolaus Angel, MSc
+Dipl.-Ing. Angela Blaha, B.Sc.
+Radu-Dionisie Curcean
+Felix Dauser, BSc
+Dragana Dimitrijevic, MSc
+Amr Eltabakh, MSc.
+Florian Faber, B.Sc.
+Robert Fellner, MSc
+Dipl.-Ing. Bernhard Neuberger, BSc.
+Horst Orsolits, MSc
+Lucas Sebastian Pammer, MSc.
+Dr. techn. Surya Kannan Peesapati
+Michael Schebek, MSc
+Alessandro Scherl, MSc.
+Simon Schwaiger, MSc
+David Seyser, BSc
+Andreas Steinbichler, BSc
+Cedric Michael Steininger
+DI Dr. Kemajl Stuja</param1>
+</field>
+
+<field>
+<type>text</type>
+<name>until</name>
+<description>Booked until – DD.MM.YYYY, leave empty if open-ended</description>
+<required>0</required>
+</field>
+
+<field>
+<type>text</type>
+<name>note</name>
+<description>Project, or reason when Occupied (e.g. Maintenance, Lecture RO3 until 16:00)</description>
+<required>0</required>
+</field>
+
+<field>
+<type>url</type>
+<name>guide</name>
+<description>Link to this robot's chapter in the setup guide Book (optional)</description>
+<required>0</required>
+</field>
+
+</preset>

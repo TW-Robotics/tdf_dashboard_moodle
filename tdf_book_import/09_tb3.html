@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>TurtleBot3 Burger</title></head>
+<body>
+<div style="overflow:hidden;margin-bottom:1rem"><img src="images/turtlebot3.png" alt="TurtleBot3 Burger" style="max-width:220px;max-height:180px;width:auto;height:auto;float:right;margin:0 0 1rem 1.5rem"><table style="font-size:.9rem;border-collapse:collapse"><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Maker</th><td style="padding:.2rem 0">ROBOTIS</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Type</th><td style="padding:.2rem 0">Mobile robot (ROS)</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Location</th><td style="padding:.2rem 0">FLOOR</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Controller</th><td style="padding:.2rem 0">Raspberry Pi + OpenCR</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">IP address</th><td style="padding:.2rem 0">192.168.100.50</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">SDK</th><td style="padding:.2rem 0">TCP/IP JSON (ports 9997–9999)</td></tr></table><p style="margin-top:.75rem"><em>Availability: see the <strong>Robot availability</strong> database in this course.</em></p></div>
+<p>A complete setup guide for provisioning TurtleBot3 units, configuring persistent networking and Wi-Fi autoconnect, deploying the Docker container service, and testing remote control over TCP/IP.</p>
+
+<h2>1. Robot Credentials &amp; Network Addressing</h2>
+<p>Replace <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">X</code> with the assigned robot number across all commands and configurations (e.g., TurtleBot 0 uses <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">X = 0</code>, IP <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">192.168.100.50</code>, and Wi-Fi <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">Turtlebot0</code>).</p>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+<thead>
+<tr>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Parameter</th>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Value</th>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Example (TurtleBot 0)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Username</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">ubuntu</code></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">ubuntu</code></td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Password</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">MRE_turtlebotX</code></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">MRE_turtlebot0</code></td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Wi-Fi SSID</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">TurtlebotX</code></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">Turtlebot0</code></td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Static IP (Fritz!Box)</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">192.168.100.5X</code></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">192.168.100.50</code></td>
+</tr>
+</tbody>
+</table></div>
+<div class="alert alert-info" style="padding:.75rem 1rem;border-radius:6px;margin:1rem 0;border-left:4px solid #1d5aa6;background:#eef4fb"><p style="margin:0 0 .25rem;font-weight:bold">Note</p>
+<p>Configure the router/Fritz!Box DHCP reservation so the MAC address maps permanently to <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">192.168.100.5X</code>.</p>
+</div>
+
+<h2>2. Initial Setup on TurtleBot</h2>
+<p>Access the TurtleBot directly or via your preliminary network connection to perform initial updates and Docker installation.</p>
+<h3>2.1 Update System Packages</h3>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>sudo apt update &amp;&amp; sudo apt upgrade -y
+</code></pre>
+<h3>2.2 Install Docker Engine</h3>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
+
+# Add Docker's official GPG key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+# Add the stable repository for Ubuntu 18.04 (bionic)
+echo "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
+
+# Install the engine
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+sudo usermod -aG docker $USER
+newgrp docker
+sudo systemctl enable docker
+</code></pre>
+<p>Verify the Docker engine is running:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>docker run --rm hello-world
+</code></pre>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected output: <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">Hello from Docker!</code></em></p>
+<h3>2.3 Install ROS Melodic</h3>
+<p>Configure the ROS repositories, install ROS Melodic along with the required TurtleBot3 packages, and initialize <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">rosdep</code>:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code># Add ROS repository
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" &gt; /etc/apt/sources.list.d/ros-latest.list'
+
+# Set up ROS apt key
+sudo apt install -y curl
+curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+
+# Update and install ROS packages
+sudo apt update
+sudo apt install -y \
+    ros-melodic-ros-base \
+    ros-melodic-turtlebot3 \
+    ros-melodic-turtlebot3-bringup \
+    ros-melodic-turtlebot3-msgs \
+    ros-melodic-hlds-lfcd-lds \
+    ros-melodic-rosserial-python \
+    ros-melodic-rospy-message-converter \
+    python-rosdep \
+    python-rosinstall \
+    python-rosinstall-generator \
+    python-wstool \
+    build-essential
+
+# Initialize rosdep
+sudo rosdep init
+rosdep update
+</code></pre>
+<h3>2.4 Create and Build Catkin Workspace</h3>
+<p>Set up the workspace and build:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code># Create workspace structure
+mkdir -p /home/ubuntu/catkin_ws/src
+cd /home/ubuntu/catkin_ws/src
+
+# Source base ROS environment
+source /opt/ros/melodic/setup.bash
+
+# Initialize workspace and create tcp_ip_server package
+catkin_init_workspace
+
+# Build workspace
+cd /home/ubuntu/catkin_ws
+catkin_make
+</code></pre>
+<h3>2.5 Configure Environment Variables</h3>
+<p>Append OpenCR, dynamic network assignment, ROS environment variables, and auto-tmux behavior to <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">~/.bashrc</code>:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>cat &lt;&lt; 'EOF' &gt;&gt; ~/.bashrc
+
+# Turtlebot
+export OPENCR_PORT=/dev/ttyACM0
+export OPENCR_MODEL=burger
+
+# ROS dynamic IP resolution
+if ip addr show eth0 | grep "inet " &amp;&gt;/dev/null; then
+    ip_addr="$(ip addr show eth0 | grep "inet " | awk '{print $2}')"
+elif ip addr show wlan0 | grep "inet " &amp;&gt;/dev/null; then
+    ip_addr="$(ip addr show wlan0 | grep "inet " | awk '{print $2}')"
+fi
+ip_addr="${ip_addr::-3}"
+
+export ROS_MASTER_URI="http://$ip_addr:11311"
+export ROS_IP="$ip_addr"
+export ROS_HOSTNAME="$ip_addr"
+echo "ROS_MASTER_URI=&gt;$ROS_MASTER_URI&lt;"
+echo "ROS_HOSTNAME=&gt;$ROS_HOSTNAME&lt;"
+echo "ROS_IP=&gt;$ROS_IP&lt;"
+export TURTLEBOT3_MODEL="burger"
+
+# Source workspaces
+source /opt/ros/melodic/setup.bash
+source $HOME/catkin_ws/devel/setup.bash
+
+# Automatically attach/create tmux session on SSH login
+if [[ -n "$PS1" ]] &amp;&amp; [[ -z "$TMUX" ]] &amp;&amp; [[ -n "$SSH_CONNECTION" ]]; then
+    tmux attach-session -t ssh_tmux || tmux new-session -s ssh_tmux
+fi
+EOF
+
+# Reload bashrc to apply changes
+source ~/.bashrc
+</code></pre>
+
+<h2>3. Transfer Repository (from Remote PC)</h2>
+<p>Transfer the <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">tcp_ip_ros_example</code> repository from your host development machine / Remote PC to the TurtleBot.</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code># Option A: Secure Copy from host
+scp -r tcp_ip_ros_example ubuntu@192.168.100.5X:~/git/
+
+# Option B: Clone directly via Git on the TurtleBot
+# git clone &lt;repository-url&gt; ~/git/tcp_ip_ros_example
+</code></pre>
+
+<h2>4. Service &amp; Container Configuration (on TurtleBot)</h2>
+<h3>4.1 Run the Installer</h3>
+<p>Run the installation script to build the Docker image and register the systemd service. Connect the robot to the internet before running this step.</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>cd ~/git/tcp_ip_ros_example
+bash install.sh
+</code></pre>
+<div class="alert alert-success" style="padding:.75rem 1rem;border-radius:6px;margin:1rem 0;border-left:4px solid #2e7d32;background:#eef7ef"><p style="margin:0 0 .25rem;font-weight:bold">Tip</p><p style="margin:0">Grab a cup of Coffee ; This will take a while</p></div>
+<h3>4.2 Verify Systemd Service Configuration</h3>
+<p>Verify that <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">/etc/systemd/system/tcp_ip.service</code> contains the correct executable target:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">ini</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>ExecStart=/bin/bash /home/ubuntu/git/tcp_ip_ros_example/docker/run_docker_service.sh
+</code></pre>
+<h3>4.3 Configure Application IP</h3>
+<p>Edit the application configuration file to match the robot's static IP address:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>nano ~/git/tcp_ip_ros_example/classes/config.py
+</code></pre>
+<p>Set the IP parameter:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">python</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code># Set to 192.168.100.5X (e.g., 192.168.100.50 for Turtlebot0)
+ROBOT_IP = "192.168.100.5X"
+</code></pre>
+
+<h2>5. Network &amp; Wi-Fi Persistent Configuration (on TurtleBot)</h2>
+<p>Ensure the TurtleBot connects automatically to the assigned Wi-Fi network on boot without dropping connections due to power-saving states.</p>
+<h3>5.1 Connect &amp; Enable Autoconnect</h3>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code># 1. Scan available networks
+nmcli device wifi list
+
+# 2. Connect to the designated robot Wi-Fi
+sudo nmcli device wifi connect "TurtlebotX" password "YOUR_WIFI_PASSWORD"
+
+# 3. Enable system-wide permissions and autoconnect
+sudo nmcli connection modify "TurtlebotX" connection.permissions ""
+sudo nmcli connection modify "TurtlebotX" connection.autoconnect yes
+
+# 4. Store credentials in plaintext configuration (bypasses desktop keyring on boot)
+sudo nmcli connection modify "TurtlebotX" 802-11-wireless-security.psk-flags 0
+</code></pre>
+<h3>5.2 Disable Wi-Fi Power Saving</h3>
+<p>Prevent Wi-Fi dropouts caused by aggressive power management:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>sudo nano /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+</code></pre>
+<p>Change <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">wifi.powersave</code> from <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">3</code> (enabled) to <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">2</code> (disabled):</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">ini</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>[connection]
+wifi.powersave = 2
+</code></pre>
+<h3>5.3 Reboot the Robot</h3>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>sudo reboot
+</code></pre>
+
+<h2>6. Verification &amp; Health Checks</h2>
+<p>From your Remote PC / WSL terminal connected to the same network:</p>
+<h3>6.1 Ping Test</h3>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>ping 192.168.100.5X
+</code></pre>
+<h3>6.2 Port Connectivity Check</h3>
+<p>Verify that the service is running and listening on the expected TCP ports (<code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">9997</code>, <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">9998</code>, <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">9999</code>):</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>nc -zv 192.168.100.5X 9997 9998 9999
+</code></pre>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected output: Connection succeeded for all three ports.</em></p>
+<h3>6.3 ROS Topics &amp; Nodes</h3>
+<p>SSH into the robot:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>ssh ubuntu@192.168.100.5X
+</code></pre>
+<p>Inspect active ROS topics:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>rostopic list
+</code></pre>
+<p><em>Ensure <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">/scan</code>, <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">/odom</code>, and <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">/cmd_vel</code> are present.</em></p>
+<p>Inspect active ROS nodes:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>rosnode list
+</code></pre>
+<p><em>Ensure <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">/turtlebot3_core</code> is running.</em></p>
+
+<h2>7. Motion Test Script</h2>
+<p>Save the following test script as <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">drive_test.py</code> on your Remote PC to test remote velocity commands over TCP/IP:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">python</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>import socket
+import json
+import time
+
+# Update with target robot IP
+ROBOT_IP = "192.168.100.5X"  
+PORT = 9999
+START_STR = "---START---"
+END_STR = "___END___"
+
+def format_twist(linear: float, angular: float) -&gt; bytes:
+    payload = {"linear": round(linear, 4), "angular": round(angular, 4)}
+    message = START_STR + json.dumps(payload) + END_STR
+    return message.encode("utf-8")
+
+def main():
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    print(f"Connecting to {ROBOT_IP}:{PORT}...")
+    s.connect((ROBOT_IP, PORT))
+    print("Connected!")
+
+    try:
+        # Stream rotate command for 2 seconds at 10 Hz
+        print("Rotating robot...")
+        start_time = time.time()
+        while time.time() - start_time &lt; 2.0:
+            s.sendall(format_twist(linear=0.0, angular=0.4))
+            time.sleep(0.1)
+
+        # Stop command
+        print("Stopping robot...")
+        s.sendall(format_twist(linear=0.0, angular=0.0))
+        print("Done!")
+    finally:
+        s.close()
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+<p>Run the script from your Remote PC:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>python3 drive_test.py
+</code></pre>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected behavior: The robot rotates in place for 2 seconds and stops.</em></p>
+</body></html>

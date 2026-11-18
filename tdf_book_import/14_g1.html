@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Unitree G1 EDU U2 Advanced</title></head>
+<body>
+<div style="overflow:hidden;margin-bottom:1rem"><img src="images/humanoid.png" alt="Unitree G1 EDU U2 Advanced" style="max-width:220px;max-height:180px;width:auto;height:auto;float:right;margin:0 0 1rem 1.5rem"><p style="margin-top:.75rem"><em>Availability: see the <strong>Robot availability</strong> database in this course.</em></p></div>
+<p>Bipedal humanoid robot for research and teaching, with 7-DoF arms and a 3-DoF waist.</p>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>ID</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">g1</code></td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Maker</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Unitree Robotics</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Type</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Humanoid robot (bipedal)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Location</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">FLOOR</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Degrees of freedom</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">29 = legs 2 × 6 + waist 3 + arms 2 × 7</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Hands</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">None functional (U2 has no dexterous hands)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Height / weight</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">approx. 1.32 m / approx. 35 kg</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Max. arm payload</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">approx. 3 kg</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Compute</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">8-core CPU (motion control) + NVIDIA Jetson Orin NX 16 GB (100 TOPS) for development</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Sensors</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">3D LiDAR (Livox MID-360), depth camera (Intel RealSense D435i), 4-mic array, speaker</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Battery</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">9000 mAh quick-release, approx. 2 h runtime; charger 54 V / 5 A</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Connectivity</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Wi-Fi 6, Bluetooth 5.2, Ethernet</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>IP address</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">192.168.10.60 (lab network) – internal robot network is usually 192.168.123.x (verify)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>SDK</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">unitree_sdk2 (C++ / Python, DDS) and ROS 2 (<code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">unitree_ros2</code>)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Software &amp; SDK</h2>
+<ul>
+<li>High-level control (walk, stand, gestures) and low-level joint control through <strong>unitree_sdk2</strong>.</li>
+<li>ROS 2 integration via <code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">unitree_ros2</code>.</li>
+<li>Typical research workflow: train policies in simulation (Isaac Sim / MuJoCo with the G1 URDF), then deploy to the Jetson Orin via unitree_sdk2.</li>
+<li>OTA updates through the Unitree app.</li>
+</ul>
+<h2>Getting started</h2>
+<ol>
+<li>Charge and insert the battery; check that the robot is hanging in or next to its lifting frame.</li>
+<li>Power on and use the handheld controller to stand up and walk in a cleared area.</li>
+<li>Connect a laptop to the robot by Ethernet to use the SDK; follow the network setup in the Unitree developer docs.</li>
+<li>Try SDK examples first in high-level mode before using low-level joint control.</li>
+</ol>
+<h2>Safety</h2>
+<ul>
+<li>The robot can fall. Always keep at least 2 m clearance and a person ready with the remote stop.</li>
+<li><strong>Low-level control / new code:</strong> run with the robot suspended in its lifting frame (gantry) first.</li>
+<li>Do not leave the robot standing unattended; put it into a safe resting pose and power off.</li>
+</ul>
+<h2>Open points</h2>
+<ul>
+<li>☐ Robot-internal IP addresses and lab network bridging</li>
+<li>☐ Firmware / SDK versions installed</li>
+</ul>
+<h2>Links</h2>
+<ul>
+<li>Dealer page (G1 Basic): <a href="https://terra-robotics.de/products/unitree-g1-basic-humanoider-roboter" target="_blank">https://terra-robotics.de/products/unitree-g1-basic-humanoider-roboter</a></li>
+<li>Developer docs: <a href="https://support.unitree.com/home/en/G1_developer" target="_blank">https://support.unitree.com/home/en/G1_developer</a></li>
+<li>SDK: <a href="https://github.com/unitreerobotics/unitree_sdk2" target="_blank">https://github.com/unitreerobotics/unitree_sdk2</a></li>
+</ul>
+</body></html>

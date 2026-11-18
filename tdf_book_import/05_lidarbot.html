@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>LiDAR Bot AGV with Mecanum Wheels</title></head>
+<body>
+<div style="overflow:hidden;margin-bottom:1rem"><img src="images/mecanum.png" alt="LiDAR Bot AGV with Mecanum Wheels" style="max-width:220px;max-height:180px;width:auto;height:auto;float:right;margin:0 0 1rem 1.5rem"><table style="font-size:.9rem;border-collapse:collapse"><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Maker</th><td style="padding:.2rem 0">M5Stack</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Type</th><td style="padding:.2rem 0">Mobile AGV (mecanum)</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Location</th><td style="padding:.2rem 0">FLOOR</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">Controller</th><td style="padding:.2rem 0">M5Stack Core (ESP32)</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">IP address</th><td style="padding:.2rem 0">192.168.10.55</td></tr><tr><th style="text-align:left;padding:.2rem .8rem .2rem 0;white-space:nowrap">SDK</th><td style="padding:.2rem 0">USB serial; ESP-NOW remote (Wi-Fi only with custom firmware)</td></tr></table><p style="margin-top:.75rem"><em>Availability: see the <strong>Robot availability</strong> database in this course.</em></p></div>
+<p>The M5Stack LiDAR Bot is a small mecanum-wheel AGV with a 360° LiDAR and an M5Stack Core (ESP32) controller, kept in the FLOOR area of the Digital Factory Lab. This guide covers power-up, USB connection, a LiDAR data check and shutdown.</p>
+<div class="alert alert-info" style="padding:.75rem 1rem;border-radius:6px;margin:1rem 0;border-left:4px solid #1d5aa6;background:#eef4fb"><p style="margin:0 0 .25rem;font-weight:bold">Note</p>
+<p>Lab-specific values (IP, frames, credentials) below are defaults. Check them against the robot before use.</p>
+</div>
+
+<h2>1. Robot Data &amp; Network Addressing</h2>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+<thead>
+<tr>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Parameter</th>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Controller</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">M5Stack Core (ESP32)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Software</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">M5Stack LidarBot firmware (Arduino) / UIFlow</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Drive</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">4 mecanum wheels (omnidirectional)</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Sensor</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">360° LiDAR</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Payload / speed</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Not specified</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><strong>Robot IP</strong></td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top"><code style="background:#f1f3f6;padding:.1em .3em;border-radius:3px">192.168.10.55</code> – only with custom Wi-Fi firmware; default is USB / ESP-NOW remote</td>
+</tr>
+</tbody>
+</table></div>
+
+<h2>2. Safety Checks</h2>
+<div class="alert alert-warning" style="padding:.75rem 1rem;border-radius:6px;margin:1rem 0;border-left:4px solid #c0322b;background:#fdf0ef"><p style="margin:0 0 .25rem;font-weight:bold">Warning</p>
+<p>Mecanum wheels can move sideways – keep the area around the robot clear in all directions, not only in front.</p>
+</div>
+<ul>
+<li>Battery charged.</li>
+<li>LiDAR rotor free to spin, lens clean.</li>
+<li>Wheels free of hair and debris.</li>
+</ul>
+
+<h2>3. Power-Up Procedure</h2>
+<h3>3.1 Start the Controller</h3>
+<ol>
+<li>Place the robot on the floor.</li>
+<li>Press the power button on the M5Stack Core.</li>
+<li>Wait until the screen shows the LiDAR map/status.</li>
+</ol>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected result: The LiDAR spins and the screen shows scan points.</em></p>
+
+<h2>4. Network Configuration</h2>
+<p>Default connection is USB-C to the M5Stack Core:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>ls /dev/ttyUSB* /dev/ttyACM*
+</code></pre>
+<p>With custom Wi-Fi firmware:</p>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>ping -c 3 192.168.10.55
+</code></pre>
+
+<h2>5. Software Installation (Remote PC)</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>pip install pyserial
+</code></pre>
+<p>For firmware changes: Arduino IDE with the M5Stack board package, or UIFlow.</p>
+
+<h2>6. Verification &amp; Health Checks</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">bash</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code>python -m serial.tools.list_ports
+</code></pre>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected output: A CP210x / CH9102 USB serial device is listed.</em></p>
+
+<h2>7. Test Script</h2>
+<div style="font-size:.75rem;color:#5b6472;margin:1rem 0 -.6rem;text-transform:uppercase;letter-spacing:.05em">python</div><pre style="background:#f4f6f8;border:1px solid #d9dee5;border-radius:6px;padding:.75rem 1rem;overflow:auto;font-size:.875rem;line-height:1.45;white-space:pre"><code># minimal connection test – reads serial output from the M5Stack Core
+import serial, time
+
+PORT = "/dev/ttyUSB0"   # verify (COMx on Windows)
+with serial.Serial(PORT, 115200, timeout=1) as ser:
+    t0 = time.time()
+    while time.time() - t0 &lt; 5:
+        line = ser.readline().decode(errors="ignore").strip()
+        if line:
+            print(line)
+</code></pre>
+<p style="border-left:3px solid #2e7d32;padding-left:.75rem;color:#2e5e31"><em>Expected behavior: Debug/status lines from the firmware are printed. Test driving with the M5Stack remote controller (ESP-NOW).</em></p>
+
+<h2>8. Shutdown</h2>
+<ol>
+<li>Stop driving.</li>
+<li>Double-press the power button on the M5Stack Core (or hold until off).</li>
+<li>Charge if needed.</li>
+<li>Release the robot on the Availability tab.</li>
+</ol>
+
+<h2>9. Troubleshooting</h2>
+<div style="overflow-x:auto"><table class="table table-bordered table-sm" style="border-collapse:collapse;width:auto;max-width:100%">
+<thead>
+<tr>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Symptom</th>
+<th style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">LiDAR does not spin</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Check the LiDAR cable; restart the robot.</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Robot drifts sideways</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Check that all mecanum wheels are mounted in the correct orientation (X pattern).</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">No serial port on PC</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Install the CP210x/CH9102 USB driver; try another cable.</td>
+</tr>
+<tr>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Remote has no control</td>
+<td style="border:1px solid #d9dee5;padding:.35rem .6rem;vertical-align:top">Re-pair the remote (see M5Stack docs).</td>
+</tr>
+</tbody>
+</table></div>
+</body></html>
