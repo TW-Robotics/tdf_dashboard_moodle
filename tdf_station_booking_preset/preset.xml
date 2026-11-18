@@ -1,0 +1,82 @@
+<preset>
+
+<description>Digital Factory Lab – hourly station bookings. © Dr. Kannan Peesapati</description>
+
+<settings>
+<intro></intro>
+<comments>0</comments>
+<requiredentries>0</requiredentries>
+<requiredentriestoview>0</requiredentriestoview>
+<maxentries>0</maxentries>
+<rssarticles>0</rssarticles>
+<approval>0</approval>
+<manageapproved>1</manageapproved>
+<defaultsortdir>1</defaultsortdir>
+<defaultsort>date</defaultsort>
+</settings>
+
+<field>
+<type>menu</type>
+<name>station</name>
+<description>Station to book</description>
+<required>1</required>
+<param1>
+Taurob - Sieglinde
+MiR with UR5
+3D Measuring Machine
+ABB CRB 15000-5/0.95 (GoFa)
+High-rack Warehouse
+3D Printing Farm
+Bin Picking Station
+</param1>
+</field>
+
+<field>
+<type>date</type>
+<name>date</name>
+<description>Day of the booking</description>
+<required>1</required>
+</field>
+
+<field>
+<type>menu</type>
+<name>from</name>
+<description>Start time</description>
+<required>1</required>
+<param1>08:00
+09:00
+10:00
+11:00
+12:00
+13:00
+14:00
+15:00
+16:00
+17:00</param1>
+</field>
+
+<field>
+<type>menu</type>
+<name>to</name>
+<description>End time</description>
+<required>1</required>
+<param1>09:00
+10:00
+11:00
+12:00
+13:00
+14:00
+15:00
+16:00
+17:00
+18:00</param1>
+</field>
+
+<field>
+<type>text</type>
+<name>note</name>
+<description>Project or note (optional)</description>
+<required>0</required>
+</field>
+
+</preset>
