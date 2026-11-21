@@ -1,0 +1,11 @@
+1. Role "Station booker"
+– Context types where this role may be assigned: Activity module
+– Allow: mod/data:view, mod/data:viewentry, mod/data:writeentry
+
+2. Role "Station supervisor"
+– Context types where this role may be assigned: Activity module
+– Allow: mod/data:view, mod/data:viewentry, mod/data:writeentry, mod/data:manageentries, moodle/role:assign
+
+Under "Allow role assignments":
+– "Station supervisor" may assign "Station booker"
+– "Teacher" (editing teacher) may assign "Station supervisor" and "Station booker"
