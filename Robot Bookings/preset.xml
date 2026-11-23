@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<preset>
+
+<description/>
+
+<settings>
+<intro/>
+<comments>0</comments>
+<requiredentries>0</requiredentries>
+<requiredentriestoview>0</requiredentriestoview>
+<maxentries>0</maxentries>
+<rssarticles>0</rssarticles>
+<approval>0</approval>
+<manageapproved>1</manageapproved>
+<defaultsortdir>1</defaultsortdir>
+<defaultsort>date</defaultsort>
+</settings>
+
+<field>
+<type>menu</type>
+<name>robot</name>
+<description>Robot to book</description>
+<param1>WAVEGO EX Bionic Dog
+Galaxy RVR Mars Rover
+RaspRover (tracked, with arm)
+Double-Deck Robot Chassis
+LiDAR Bot AGV with Mecanum Wheels
+SO-ARM101
+Mini Wheeled-Legged Robot
+Dancing Robot
+TurtleBot3 Burger
+Robotis Dynamixel Hexapod MKII
+Taurob - Sieglinde
+Zelos
+MiR with UR5
+Unitree G1 EDU U2 Advanced
+Festo Robotino 3
+KUKA KR 16-2
+Wittmann W818-2058
+UR5
+ABB CRB 15000-5/0.95 (GoFa)
+KUKA KR 6 R900 sixx
+FANUC M-6iB
+FANUC ER-4iA</param1>
+<required>1</required>
+</field>
+
+<field>
+<type>date</type>
+<name>date</name>
+<description>Day of the booking</description>
+<required>1</required>
+</field>
+
+<field>
+<type>menu</type>
+<name>from</name>
+<description>Start time</description>
+<param1>08:00
+09:00
+10:00
+11:00
+12:00
+13:00
+14:00
+15:00
+16:00
+17:00</param1>
+<required>1</required>
+</field>
+
+<field>
+<type>menu</type>
+<name>to</name>
+<description>End time</description>
+<param1>09:00
+10:00
+11:00
+12:00
+13:00
+14:00
+15:00
+16:00
+17:00
+18:00</param1>
+<required>1</required>
+</field>
+
+<field>
+<type>text</type>
+<name>note</name>
+<description>Project or note (optional)</description>
+<required>0</required>
+</field>
+
+</preset>

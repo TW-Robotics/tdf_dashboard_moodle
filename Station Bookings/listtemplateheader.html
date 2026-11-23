@@ -1,0 +1,16 @@
+<div class="bk">
+  <div class="bk-top">
+    <div><h3 class="bk-h">Book a slot</h3><p class="bk-sub">Check which stations are free in your time window and book one by the hour (max. 10 h per booking).</p></div>
+    <a class="btn btn-primary" id="bk-add" href="edit.php">+ Book a station</a>
+  </div>
+  <div id="bk-overview"><p class="bk-sub">Loading stations…</p></div>
+  <div class="bk-top bk-top2"><div><h3 class="bk-h">All bookings</h3><p class="bk-sub" id="bk-summary">Loading…</p></div></div>
+  <div class="bk-bar">
+    <div class="bk-tabs" role="group" aria-label="Show">
+      <button type="button" data-t="upcoming" aria-pressed="true">Upcoming</button><button type="button" data-t="today">Today</button><button type="button" data-t="past">Past</button><button type="button" data-t="all">All</button>
+    </div>
+    <select id="bk-robot" aria-label="Station"></select>
+    <input id="bk-q" type="search" placeholder="Search name, station, note" aria-label="Search">
+  </div>
+  <p class="bk-hint" id="bk-pagehint" hidden></p>
+  <div class="bk-list">
