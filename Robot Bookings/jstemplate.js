@@ -18,7 +18,29 @@
   var ACCESS_DB = 2338;       // d= of "Station access": linked robots can then only be booked by people on that station's list; 0 = anyone
   var ALL_ROBOTS_NEED_ACCESS = true;   // true = every robot needs an entry in "Station access" (robot name as station); false = only robots linked to a station
   var ONLY_MY_ROBOTS = true;           // true = show only the robots you may book (the Leader sees all)
-  var ROBOTS = {"WAVEGO EX Bionic Dog": {"cell": "FLOOR", "maker": "Waveshare", "art": "wavego_bionic"}, "Galaxy RVR Mars Rover": {"cell": "FLOOR", "maker": "SunFounder", "art": "galaxy_rvr_rover"}, "RaspRover (tracked, with arm)": {"cell": "FLOOR", "maker": "Waveshare", "art": "rasprover_tracked"}, "Double-Deck Robot Chassis": {"cell": "BENCH", "maker": "BerryBase", "art": "berrybase_chassis"}, "LiDAR Bot AGV with Mecanum Wheels": {"cell": "FLOOR", "maker": "M5Stack", "art": "mecanum"}, "SO-ARM101": {"cell": "TABLE", "maker": "TheRobotStudio / Hugging Face (open source)", "art": "so_arm"}, "Mini Wheeled-Legged Robot": {"cell": "FLOOR", "maker": "StackForce", "art": "stackforce_wheeled"}, "Dancing Robot": {"cell": "SHELF", "maker": "Playtastic", "art": "playtastic_humanoid"}, "TurtleBot3 Burger": {"cell": "FLOOR", "maker": "ROBOTIS", "art": "turtlebot3"}, "Robotis Dynamixel Hexapod MKII": {"cell": "FLOOR", "maker": "Interbotix / ROBOTIS", "art": "hexapod"}, "Taurob - Sieglinde": {"cell": "FLOOR", "maker": "taurob", "art": "taurob"}, "Zelos": {"cell": "FLOOR", "maker": "Not specified", "art": "zelos"}, "MiR with UR5": {"cell": "FLOOR", "maker": "Mobile Industrial Robots (MiR)", "art": "mir_ur5"}, "Unitree G1 EDU U2 Advanced": {"cell": "FLOOR", "maker": "Unitree Robotics", "art": "humanoid"}, "Festo Robotino 3": {"cell": "FLOOR", "maker": "Festo", "art": "robotino"}, "KUKA KR 16-2": {"cell": "CELL", "maker": "KUKA", "art": "kuka_kr16"}, "Wittmann W818-2058": {"cell": "CELL", "maker": "WITTMANN", "art": "wittmann"}, "UR5": {"cell": "CELL", "maker": "Universal Robots", "art": "ur5"}, "ABB CRB 15000-5/0.95 (GoFa)": {"cell": "CELL", "maker": "ABB", "art": "abb_gofa"}, "KUKA KR 6 R900 sixx": {"cell": "CELL", "maker": "KUKA", "art": "kuka_kr6"}, "FANUC M-6iB": {"cell": "CELL", "maker": "FANUC", "art": "fanuc_m6ib"}, "FANUC ER-4iA": {"cell": "CELL", "maker": "FANUC", "art": "fanuc_er4ia"}};     // robot name -> {cell, maker, art}
+  var ROBOTS = {"WAVEGO EX Bionic Dog": {"cell": "C0.01", "maker": "Waveshare", "art": "wavego_bionic"}, 
+  "Galaxy RVR Mars Rover": {"cell": "C0.01", "maker": "SunFounder", "art": "galaxy_rvr_rover"}, 
+  "RaspRover (tracked, with arm)": {"cell": "C0.01", "maker": "Waveshare", "art": "rasprover_tracked"},
+   "Double-Deck Robot Chassis": {"cell": "C0.01", "maker": "BerryBase", "art": "berrybase_chassis"},
+    "LiDAR Bot AGV with Mecanum Wheels": {"cell": "C0.01", "maker": "M5Stack", "art": "mecanum"}, 
+    "SO-ARM101": {"cell": "TABLE", "maker": "TheRobotStudio / Hugging Face (open source)", "art": "so_arm"}, 
+    "Mini Wheeled-Legged Robot": {"cell": "C0.01", "maker": "StackForce", "art": "stackforce_wheeled"},
+     "Dancing Robot": {"cell": "SHELF", "maker": "Playtastic", "art": "playtastic_humanoid"}, 
+     "TurtleBot3 Burger": {"cell": "C0.01", "maker": "ROBOTIS", "art": "turtlebot3"}, 
+     "Robotis Dynamixel Hexapod MKII": {"cell": "C0.01", "maker": "Interbotix / ROBOTIS", "art": "hexapod"}, 
+     "Taurob - Sieglinde": {"cell": "C0.01", "maker": "taurob", "art": "taurob"}, 
+     "Zelos": {"cell": "C0.01", "maker": "Not specified", "art": "zelos"}, 
+     "MiR with UR5": {"cell": "C0.01", "maker": "Mobile Industrial Robots (MiR)", "art": "mir_ur5"}, 
+     "Unitree G1 EDU U2 Advanced": {"cell": "C0.01", "maker": "Unitree Robotics", "art": "humanoid"}, 
+     "Festo Robotino 3": {"cell": "C0.01", "maker": "Festo", "art": "robotino"}, 
+     "KUKA KR 16-2": {"cell": "C0.01", "maker": "KUKA", "art": "kuka_kr16"}, 
+     "Wittmann W818-2058": {"cell": "C0.01", "maker": "WITTMANN", "art": "wittmann"}, 
+     "UR5": {"cell": "C1.11", "maker": "Universal Robots", "art": "ur5"}, 
+     "ABB CRB 15000-5/0.95 (GoFa)": {"cell": "C0.01", "maker": "ABB", "art": "abb_gofa"}, 
+     "KUKA KR 6 R900 sixx": {"cell": "C0.01", "maker": "KUKA", "art": "kuka_kr6"}, 
+     "FANUC M-6iB": {"cell": "C0.01", "maker": "FANUC", "art": "fanuc_m6ib"}, 
+     "FANUC ER-4iA": {"cell": "C0.01", "maker": "FANUC","art": "fanuc_er4ia"}};     // robot name -> {cell, maker, art}
+
   var IMG = pictures();            // robot pictures – at the very end of this file
   /* ========================== */
 
