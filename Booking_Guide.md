@@ -150,7 +150,7 @@ Your Moodle name is saved with the booking automatically.
 | The time shows as booked but I see no booking | It was booked on the linked robot/station page |
 | My booking shows **Problem** | Someone booked earlier; choose another time |
 | I can't edit a booking | You can only edit your own bookings |
-| Something else | Contact the Leader: Dr. Kannan Peesapati |
+| Something else | Contact: Dr. Kannan Peesapati (kannan.peesapati@technikum-wien.at) |
 
 ---
 © Dr. Kannan Peesapati – Digital Factory Lab, FH Technikum Wien
